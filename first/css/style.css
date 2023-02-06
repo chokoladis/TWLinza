@@ -1,0 +1,7 @@
+.form_control{
+    margin-bottom: 10px;
+}
+.form_control:last-child{
+    margin: 0;
+}
+
