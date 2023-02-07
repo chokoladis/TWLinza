@@ -1,8 +1,37 @@
+*, *:hover{
+    transition: .3s;
+}
+
 form{
+    margin: 40px 0 !important;
     padding: 20px;
     border: 2px solid silver;
 }
 form hr{
     width: 100%;
     height: 2px;
+}
+
+
+.file{
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 20px;
+    padding: 10px;
+    background: rgb(41, 41, 41);
+}
+.file *{
+    color: white;
+}
+
+.file:hover{
+    background: rgba(0, 150, 130, 0.747);
+}
+
+.description p{
+    margin: 0;
+}
+.remove{
+    cursor: pointer;
 }

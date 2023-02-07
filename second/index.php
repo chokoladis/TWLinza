@@ -1,6 +1,3 @@
-<?php
-    require_once('module/loader.php');
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,13 +13,10 @@
     <section class="content">
         <div class="uk-container">
             <h2 class="uk-margin-medium-top">Задание 2 - Хранилище</h2>
-        <?
-            // if (empty($files)){ 
-            //     ?> <p>В хранилище пусто</p> <? 
-            // } else{
-                
-            // }
-        ?>
+            
+            <div class="uk-flex uk-flex-column" id="files">
+                <p><b>В хранилище пусто</b></p>
+            </div>
 
             <form action="#" method="post" enctype="multipart/form-data" class="uk-width-1-2">
                 <h4>Раздел загрузки</h4>
