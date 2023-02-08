@@ -2,49 +2,94 @@
 
 Class Curriences
 {     
-    public function GetCurriences(){
-        global $USER; 
-        //Подключение по токену
+    public function GetCurrencyPair($source,$currencies){
+      
+        $currencies_str = '';
 
-        include "install/connect_service.php";
+        if (is_array($currencies)){
 
-        $NAME_IB = $ourData["result"]["name"];
-        $code_IB = translit($NAME_IB);
+            foreach ($currencies as $val){
+                $currencies_str[] .= $val;
+            }
 
-        $Filter_IB = CIBlock::GetList(
-            Array(),
-            Array("NAME"=>$NAME_IB),
-            false);
+            $currencies = substr($currencies_str,-1);
 
-        if($res_filter_IB = $Filter_IB->Fetch())
-        {
-            $ID_NEW_IB = $res_filter_IB["ID"];
-        }
-        else{
-            // echo "<script>console.log(Инфоблока с наименованием ". $NAME_IB ." нет /n Для создания инфоблока необходимо переустановить модуль);</script>";
         }
 
-        $main_section = $ID_NEW_IB ;
-        $main_section_ingreds = $ID_NEW_INGRS_IB;
-        $categories = $ourData["result"]["categories"];
-        $products = $ourData["result"]["products"];
+        $curl = curl_init();
 
-        $ingredients = $ourData["result"]["ingredients"];
-        $ingredientsGroups = $ourData["result"]["ingredientsGroups"];
-        $ingredientsSchemes = $ourData["result"]["ingredientsSchemes"];
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://api.apilayer.com/currency_data/live?source=$source&currencies=$currencies",
+            CURLOPT_HTTPHEADER => array(
+                "Content-Type: text/plain",
+                "apikey: rF9Cq4uGI01Qd2rvoHUaDR1jl0Qajc9a"
+            ),
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET"
+        ));
 
-        include "create_category_products.php";
-        include "create_ingredients.php";
+        $response = curl_exec($curl);
+
+        curl_close($curl);
         
-        return true;
+        return $response;
+    }
+
+    public function GetList(){
+
+        // $cacheFile = 'cache' . DIRECTORY_SEPARATOR . md5('currency_list');
+    
+        // if (file_exists($cacheFile)) {
+        //     $fh = fopen($cacheFile, 'r');
+        //     $size = filesize($cacheFile);
+        //     // $cacheTime = trim(fgets($fh));
+        //     $cacheTime = filemtime($cacheFile);
+    
+        //     // if data was cached recently, return cached data
+        //     if ($cacheTime > strtotime('-1 day')) {
+        //         return fread($fh, $size);
+        //     }
+    
+        //     // else delete cache file
+        //     fclose($fh);
+        //     unlink($cacheFile);
+        // }
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://api.apilayer.com/currency_data/list",
+            CURLOPT_HTTPHEADER => array(
+                "Content-Type: text/plain",
+                "apikey: rF9Cq4uGI01Qd2rvoHUaDR1jl0Qajc9a"
+            ),
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET"
+        ));
         
+        $response = curl_exec($curl);
+        
+        curl_close($curl);
+    
+        
+        // $fh = fopen($cacheFile, 'w');
+        // fwrite($fh, time() . "\n");
+        // fwrite($fh, $response);
+        // fclose($fh);
+    
+        return $response;
     }
     
-    
-    function AgentUpdateRkeeper(){
-        CRkeeperUpdates::GetData();
-        return "CRkeeperUpdates::AgentUpdateRkeeper();";
-    }
 }
 
 ?>

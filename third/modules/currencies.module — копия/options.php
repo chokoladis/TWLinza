@@ -7,28 +7,11 @@ use Bitrix\Main\Config\Option;
 
 Loc::loadMessages(__FILE__);
 
-include 'include.php';
-
-$CurrList = Curriences::GetList();
-$CurrList = json_decode($CurrList, true);
-
 $request = HttpApplication::getInstance()->getContext()->getRequest();
 
 $module_id = htmlspecialcharsbx($request["mid"] != "" ? $request["mid"] : $request["id"]);
 
 Loader::includeModule($module_id);
-
-$arrValues = array();
-$arrValues_checkbox = array();
-
-foreach($CurrList["currencies"] as $curr => $descr){
-    $arrValues[$curr] = $curr;
-
-    $arrValues_checkbox[] = array(
-        $curr, $curr, 'N'
-    );
-
-}
 
 $aTabs = array(
     array(
@@ -42,21 +25,68 @@ $aTabs = array(
                 Loc::getMessage("MODULE_OPTIONS_TAB_SWITCH_ON"),
                     "Y",
                 array("checkbox")
-            ),           
-            array(
-                "source",
-                Loc::getMessage("MODULE_OPTIONS_TAB_SOURCE"),
-                    "RUB",
-                array("selectbox", $arrValues)
             ),
-            Loc::getMessage("MODULE_OPTIONS_TAB_CURRENCIES")
+            Loc::getMessage("MODULE_OPTIONS_TAB_APPEARANCE"),
+            array(
+                "width",
+                Loc::getMessage("MODULE_OPTIONS_TAB_WIDTH"),
+                    "50",
+                array("text", 5)
+            ),
+            array(
+                "height",
+                Loc::getMessage("MODULE_OPTIONS_TAB_HEIGHT"),
+                "50",
+                array("text", 5)
+            ),
+            array(
+                "radius",
+                Loc::getMessage("MODULE_OPTIONS_TAB_RADIUS"),
+                "50",
+                array("text", 5)
+            ),
+            array(
+                "color",
+                Loc::getMessage("MODULE_OPTIONS_TAB_COLOR"),
+                    "#bf3030",
+                    array("text", 5)
+            ),
+            Loc::getMessage("MODULE_OPTIONS_TAB_POSITION_ON_PAGE"),
+            array(
+                "side",
+                Loc::getMessage("MODULE_OPTIONS_TAB_SIDE"),
+                "left",
+                array("selectbox", array(
+                    "left"  => Loc::getMessage("MODULE_OPTIONS_TAB_SIDE_LEFT"),
+                        "right" => Loc::getMessage("MODULE_OPTIONS_TAB_SIDE_RIGHT")
+                    ))
+            ),
+            array(
+                "indent_bottom",
+                Loc::getMessage("MODULE_OPTIONS_TAB_INDENT_BOTTOM"),
+                    "10",
+                array("text", 5)
+            ),
+            array(
+                "indent_side",
+                    Loc::getMessage("MODULE_OPTIONS_TAB_INDENT_SIDE"),
+                "10",
+                array("text", 5)
+            ),
+            Loc::getMessage("MODULE_OPTIONS_TAB_ACTION"),
+            array(
+                "speed",
+                Loc::getMessage("MODULE_OPTIONS_TAB_SPEED"),
+                    "normal",
+                array("selectbox", array(
+                    "slow"   => Loc::getMessage("MODULE_OPTIONS_TAB_SPEED_SLOW"),
+                    "normal" => Loc::getMessage("MODULE_OPTIONS_TAB_SPEED_NORMAL"),
+                    "fast"   => Loc::getMessage("MODULE_OPTIONS_TAB_SPEED_FAST")
+                ))
+            )
         )
-    )
+   )
 );
-
-foreach ( $arrValues_checkbox as $checkbox => $value ){
-    array_push($aTabs[["OPTIONS"]], array( $value, $value, 'N', array("checkbox")) );
-}
 
 if($request->isPost() && check_bitrix_sessid()){
 
@@ -103,21 +133,19 @@ $tabControl = new CAdminTabControl(
 );
 
 $tabControl->Begin();
-
 ?>
-
 <form action="<? echo($APPLICATION->GetCurPage()); ?>?mid=<? echo($module_id); ?>&lang=<? echo(LANG); ?>" method="post">
 
-<?
-    foreach($aTabs as $aTab){
+  <?
+   foreach($aTabs as $aTab){
 
-        if($aTab["OPTIONS"]){
+       if($aTab["OPTIONS"]){
 
-            $tabControl->BeginNextTab();
+         $tabControl->BeginNextTab();
 
-            __AdmSettingsDrawList($module_id, $aTab["OPTIONS"]);
-        }
-    }
+         __AdmSettingsDrawList($module_id, $aTab["OPTIONS"]);
+      }
+   }
 
    $tabControl->Buttons();
   ?>

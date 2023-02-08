@@ -21,7 +21,3 @@ $MESS["MODULE_OPTIONS_TAB_SPEED_NORMAL"]       = "Средняя";
 $MESS["MODULE_OPTIONS_TAB_SPEED_FAST"]    = "Высокая";
 $MESS["MODULE_OPTIONS_INPUT_APPLY"]   = "Применить";
 $MESS["MODULE_OPTIONS_INPUT_DEFAULT"] = "По умолчанию";
-
-$MESS["MODULE_OPTIONS_TAB_SOURCE"] = "Первая валюта.";
-$MESS["MODULE_OPTIONS_TAB_CURRENCIES"] = "Валютная пара с";
-
