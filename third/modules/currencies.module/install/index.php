@@ -24,7 +24,6 @@ class currencies_module extends CModule
             $this->MODULE_NAME          = Loc::getMessage("MODULE_NAME");
             $this->MODULE_DESCRIPTION  = Loc::getMessage("MODULE_DESCRIPTION");
             $this->PARTNER_NAME     = Loc::getMessage("MODULE_PARTNER_NAME");
-            // $this->PARTNER_URI      = Loc::getMessage("MODULE_PARTNER_URI");
         }
 
         return false;

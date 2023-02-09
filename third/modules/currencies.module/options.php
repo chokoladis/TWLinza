@@ -1,16 +1,37 @@
 <?
-
 use Bitrix\Main\Localization\Loc;
 use    Bitrix\Main\HttpApplication;
 use Bitrix\Main\Loader;
 use Bitrix\Main\Config\Option;
+use \Bitrix\Main\Data\Cache;
 
 Loc::loadMessages(__FILE__);
 
 include 'include.php';
 
-$CurrList = Curriences::GetList();
-$CurrList = json_decode($CurrList, true);
+$cache = Cache::createInstance();
+ 
+$cachePath = 'CurrenciesModule';
+$cacheTtl = 86400;
+$cacheKey = 'CurrList'; 
+ 
+if ($cache->initCache($cacheTtl, $cacheKey, $cachePath))
+{
+    $vars = $cache->getVars();
+    $CurrList = $vars["CurrList"];
+}
+elseif ($cache->startDataCache())
+{ 
+
+    $CurrList = Curriences::GetList();
+    $CurrList = json_decode($CurrList, true);
+
+    $vars = [
+        'CurrList' => $CurrList,
+    ];
+     
+    $cache->endDataCache($vars);
+}
 
 $request = HttpApplication::getInstance()->getContext()->getRequest();
 
@@ -55,7 +76,7 @@ $aTabs = array(
 );
 
 foreach ( $arrValues_checkbox as $checkbox => $value ){
-    array_push($aTabs[["OPTIONS"]], array( $value, $value, 'N', array("checkbox")) );
+    array_push($aTabs[0]["OPTIONS"], array( $value[0], $value[0], 'N', array("checkbox")) );
 }
 
 if($request->isPost() && check_bitrix_sessid()){

@@ -9,7 +9,7 @@ Class Curriences
         if (is_array($currencies)){
 
             foreach ($currencies as $val){
-                $currencies_str[] .= $val;
+                $currencies_str[] .= $val.',';
             }
 
             $currencies = substr($currencies_str,-1);
@@ -18,8 +18,10 @@ Class Curriences
 
         $curl = curl_init();
 
+        $url = 'https://api.apilayer.com/currency_data/live?currencies='.$currencies.'&source='.$source;
+
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://api.apilayer.com/currency_data/live?source=$source&currencies=$currencies",
+            CURLOPT_URL => $url,
             CURLOPT_HTTPHEADER => array(
                 "Content-Type: text/plain",
                 "apikey: rF9Cq4uGI01Qd2rvoHUaDR1jl0Qajc9a"
@@ -42,24 +44,6 @@ Class Curriences
 
     public function GetList(){
 
-        // $cacheFile = 'cache' . DIRECTORY_SEPARATOR . md5('currency_list');
-    
-        // if (file_exists($cacheFile)) {
-        //     $fh = fopen($cacheFile, 'r');
-        //     $size = filesize($cacheFile);
-        //     // $cacheTime = trim(fgets($fh));
-        //     $cacheTime = filemtime($cacheFile);
-    
-        //     // if data was cached recently, return cached data
-        //     if ($cacheTime > strtotime('-1 day')) {
-        //         return fread($fh, $size);
-        //     }
-    
-        //     // else delete cache file
-        //     fclose($fh);
-        //     unlink($cacheFile);
-        // }
-
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -81,15 +65,9 @@ Class Curriences
         
         curl_close($curl);
     
-        
-        // $fh = fopen($cacheFile, 'w');
-        // fwrite($fh, time() . "\n");
-        // fwrite($fh, $response);
-        // fclose($fh);
     
         return $response;
     }
-    
 }
 
 ?>
