@@ -10,6 +10,16 @@ if(!defined("B_PROLOG_INCLUDED")||B_PROLOG_INCLUDED!==true)die();
  * @global CUser $USER
  */
 
-$arResult
-
 ?>
+
+<h3>Отношение <?=$arResult["source"]?> к другим валютам</h3>
+
+<ul>
+	<?php
+		foreach($arResult["quotes"] as $curr => $val){
+			?>
+				<li><?=$curr?> - <?=$val?></li>
+			<?
+		}
+	?>
+</ul>

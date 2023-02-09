@@ -2,7 +2,7 @@
 //подключаем класс и файлы локализации
 use Bitrix\Main\Localization\Loc;
 Loc::loadMessages(__FILE__);
-//добавляем пункт меню для нашего модуля
+
 $menu = array(
     array(
         'parent_menu' => 'global_menu_content',//определяем место меню, в данном случае оно находится в главном меню
