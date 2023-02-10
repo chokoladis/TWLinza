@@ -51,14 +51,14 @@ $(document).ready(
                         UIkit.notification({
                             message: msg.error,
                             status: 'warning',
-                            pos: 'bottom-rigth',
+                            pos: 'bottom-left',
                             timeout: 5000
                         });
                     } else{
                         UIkit.notification({
                             message: msg.success,
                             status: 'success',
-                            pos: 'bottom-rigth',
+                            pos: 'bottom-left',
                             timeout: 5000
                         });
                     }
@@ -83,7 +83,7 @@ $(document).ready(
                     UIkit.notification({
                         message: msg,
                         status: 'success',
-                        pos: 'bottom-rigth',
+                        pos: 'bottom-left',
                         timeout: 5000
                     });
 

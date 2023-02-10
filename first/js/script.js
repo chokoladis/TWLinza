@@ -85,14 +85,35 @@ $(document).ready(
             console.log(errors);
 
             if (errors == 0){
-                
-                console.log(data);
+
                 $.ajax({
                     url:'/first/ajax.php',
                     data: data,
                     method: 'POST',
                     success: function(response){
-                        console.log(response);
+                        objResponse = JSON.parse(response);
+                        console.log(objResponse);
+                        if (objResponse.status == 'OK'){
+                            UIkit.notification({
+                                message: objResponse.message,
+                                status: 'success',
+                                pos: 'bottom-left',
+                                timeout: 5000
+                            });
+
+                            $('input:not([type="submit"])').val('');
+
+                            $('input[type="submit"]').removeClass('uk-form-danger');
+                        } else {
+                            UIkit.notification({
+                                message: objResponse.message,
+                                status: 'danger',
+                                pos: 'bottom-left',
+                                timeout: 5000
+                            });
+
+                            $('input[type="submit"]').addClass('uk-form-danger');
+                        }
                     },
                     error: function (jqXHR, exception) {
                         if (jqXHR.status === 0) {
