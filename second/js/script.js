@@ -2,10 +2,11 @@ function ShowFiles(){
     $.ajax({
         url:'/second/include/ShowFiles_ajax.php',
         method: 'GET',
-        // dataType: 'json',
         success: function(response){
             $('#files').empty();
             $('#files').append(response);
+
+            GetNavPage();
         },
         error: function (jqXHR, exception) {
             if (jqXHR.status === 0) {
@@ -27,10 +28,19 @@ function ShowFiles(){
     });
 }
 
+function GetNavPage(){
+    $.ajax({
+        url:'/second/include/LoadPageNav_ajax.php',
+        method: 'GET',
+        success: function(response){
+            $('#page_nav').empty();
+            $('#page_nav').append(response);
+        }
+    });
+}
+
 $(document).ready(
     function(){
-
-        // ShowFiles();
 
         $('form').submit(function(e){
             e.preventDefault();
@@ -97,9 +107,11 @@ $(document).ready(
                 }
             });
 
+            ShowFiles();
+
         });
         
-        $(document).on('click', '.file', function(){
+        $(document).on('click', '.file .info', function(){
 
             let fileName = $(this).find('.name').text();
             
@@ -125,5 +137,6 @@ $(document).ready(
             
         });
            
+        
     }
 );

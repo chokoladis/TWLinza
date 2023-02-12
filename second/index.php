@@ -17,6 +17,11 @@
         <div class="uk-container">
             <h2 class="uk-margin-medium-top">Задание 2 - Хранилище</h2>
             
+            <button class="uk-button uk-button-primary uk-button-large upload" uk-toggle="target: #modal-upload-file" type="button">
+                <span uk-icon="icon: cloud-upload; ratio: 2"></span>
+                <p>Upload new file</p>
+            </button>
+
             <div class="uk-flex uk-flex-column" id="files">
                 <?php
                     $page = $_GET['page'];
@@ -29,31 +34,48 @@
                 ?>
             </div>
 
-            <ul class="uk-pagination uk-flex-center" uk-margin>
+            <ul class="uk-pagination uk-flex-center" uk-margin id="page_nav">
 
                 <?php
                     $count = $FileManager->get_count_page();
                     
-                    $i = 1;
-                    $html = '';
+                    if ($count > 1){
+                        $i = 1;
+                        $html = '';
 
-                    while($i <= $count){
+                        while($i <= $count){
 
-                        if($i == $page){
-                            $html .= '<li class="uk-active"><span>'.$i.'</span></li>';
-                        } else {
-                            $html .= '<li><a href="/second/?page='.$i.'">'.$i.'</a></li>';
+                            if($i == $page){
+                                $html .= '<li class="uk-active"><span>'.$i.'</span></li>';
+                            } else {
+                                $html .= '<li><a href="/second/?page='.$i.'">'.$i.'</a></li>';
+                            }
+                            
+                            $i++;
                         }
-                        
-                        $i++;
+                        echo $html;
                     }
 
-                    echo $html;
+                    
                 ?>
                
             </ul>
 
-            <form action="#" method="post" enctype="multipart/form-data" class="uk-width-1-2">
+           
+        </div>
+    </section>
+    <!-- class="uk-vissible" -->
+    <div id="modal-file" uk-modal >
+        <div class="uk-modal-dialog uk-modal-body uk-width-1-1">
+            <button class="uk-modal-close-default" type="button" uk-close></button>
+            <h2 class="uk-modal-title">Default</h2>
+            <img src="" alt="Если файл - картинка, то она отобразиться здесь">
+        </div>
+    </div>
+    <div id="modal-upload-file" uk-modal class="uk-width-1-1">
+        <div class="uk-modal-dialog uk-modal-body uk-width-1-1">
+            <button class="uk-modal-close-default" type="button" uk-close></button>
+            <form action="#" method="post" enctype="multipart/form-data">
                 <h4>Раздел загрузки</h4>
                 <hr>
                 <div class="uk-margin">
@@ -64,14 +86,6 @@
                     <input type="submit" value="Загрузить" class="uk-input">
                 </div>
             </form>
-        </div>
-    </section>
-    <!-- class="uk-vissible" -->
-    <div id="modal-file" uk-modal >
-        <div class="uk-modal-dialog uk-modal-body">
-            <button class="uk-modal-close-default" type="button" uk-close></button>
-            <h2 class="uk-modal-title">Default</h2>
-            <img src="" alt="Если файл - картинка, то она отобразиться здесь">
         </div>
     </div>
 

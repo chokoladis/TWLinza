@@ -11,8 +11,8 @@ class FileManager {
     private $mysql_user = 'root';
     private $mysql_password = '';
 
-    // private $dbh;
-    public $dbh;
+    private $dbh;
+    // public $dbh;
 
     public $displayed_el = 5;
 
@@ -166,15 +166,44 @@ class FileManager {
 
     public function delete($file){
 
-        if( unlink(self::$pathFiles.$file) ){
-            echo 'Файл '.$file.' удален';
+        $query_delete = $this->dbh->prepare("DELETE FROM $this->table WHERE `name` = :name");
+
+        if ($query_delete->execute(array('name' => $file))){
+            if( unlink(self::$pathFiles.$file) ){
+                $html = 'Файл '.$file.' удален';
+            } else {
+                $html = 'Ошибка удаления';
+            }
         } else {
-            echo 'Ошибка удаления';
+            $html = 'Ошибка удаления';
         }
+
+        return $html;
 
     }
 
-    // public function read($file){
-    //     readfile(self::$pathFiles.$file);
-    // }
+    public function load_page_nav(){
+        $count = $this->get_count_page();
+            
+        if ($count > 1){
+            $i = 1;
+            $html = '';
+    
+            while($i <= $count){
+    
+                if($i == $page){
+                    $html .= '<li class="uk-active"><span>'.$i.'</span></li>';
+                } else {
+                    $html .= '<li><a href="/second/?page='.$i.'">'.$i.'</a></li>';
+                }
+                
+                $i++;
+            }
+        } else{
+            return false;
+        }
+
+        return $html;
+    }
+
 }
