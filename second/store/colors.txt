@@ -1,0 +1,7 @@
+windows - 41756b
+
+
+background - 141819
+foreground - 41756b
+haver - ff8f67
+highlight - 41756b

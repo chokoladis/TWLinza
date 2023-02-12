@@ -30,7 +30,7 @@ function ShowFiles(){
 $(document).ready(
     function(){
 
-        ShowFiles();
+        // ShowFiles();
 
         $('form').submit(function(e){
             e.preventDefault();
@@ -98,26 +98,32 @@ $(document).ready(
             });
 
         });
+        
+        $(document).on('click', '.file', function(){
 
-        // $(document).on('click', '.file', function(){
-                
-        //     let fileName = $(this).attr('data-read');
+            let fileName = $(this).find('.name').text();
             
-        //     $.ajax({
-        //         type: "POST",
-        //         url: '/second/include/ReadFile_ajax.php',
-        //         data: { 'file': fileName},
-        //         success: function(msg){
+            let pathFile = '/second/store/'+fileName;
 
-        //             $('body').append(msg);
-        //             console.log(msg);               
-                   
-        //         },
-        //         error: function (error) {
-        //             console.log(error);
-        //         }
-        //     });
-        // });
+            console.log(pathFile);
+
+            $.ajax({
+                type: "GET",
+                url: pathFile,
+                success: function(){ 
+                    UIkit.modal($('#modal-file')).show();
+                    $('#modal-file h2').text(fileName);
+                    $('#modal-file img').attr('src', pathFile);
+        
+                },
+                error: function(xhr, status, error) {
+                  console.log(error);
+                }
+            });
+                
+           
+            
+        });
            
     }
 );

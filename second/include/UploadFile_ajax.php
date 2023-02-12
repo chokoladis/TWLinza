@@ -1,9 +1,5 @@
 <?
-    require_once('../module/loader.php');
-
-    use Store\fileManager;
-
-    $fileManager = new fileManager;
+    require_once('../module/script.php');
     
-    echo $fileManager->upload($_FILES);
+    echo $FileManager->upload($_FILES);
 ?>

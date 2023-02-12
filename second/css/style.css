@@ -1,6 +1,12 @@
+:root{
+    --bg-second: rgba(0, 150, 130, 0.747);
+}
+
 *, *:hover{
     transition: .3s;
 }
+
+
 
 form{
     margin: 40px 0 !important;
@@ -11,7 +17,33 @@ form hr{
     width: 100%;
     height: 2px;
 }
+form .uk-margin:first-of-type{
+    padding: 20px;
+    background: silver;
+    position: relative;
 
+}
+form .uk-margin:first-of-type:hover{
+    background: var(--bg-second);
+    color: white;
+
+}
+
+form input[type="file"]{
+    width: 100%;
+    height: 50px;
+    display: block;
+    align-self: center;
+    display: flex;
+    position: absolute;
+    justify-self: center;
+    left: 0;
+    top: 0;
+    height: fit-content;
+    padding: 50px 20px;
+    box-sizing: border-box;
+    padding-bottom: 15px;
+}
 
 .file{
     align-items: center;
@@ -26,7 +58,7 @@ form hr{
 }
 
 .file:hover{
-    background: rgba(0, 150, 130, 0.747);
+    background: var(--bg-second);
 }
 
 .description p{
@@ -34,4 +66,8 @@ form hr{
 }
 .remove{
     cursor: pointer;
+}
+
+.uk-notification .uk-notification-message *{
+    word-break: break-all;
 }

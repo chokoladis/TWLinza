@@ -1,9 +1,5 @@
 <?php
-    require_once('../module/loader.php');
+    require_once('../module/script.php');
 
-    use Store\fileManager;
-
-    $fileManager = new fileManager;
-
-    $fileManager->delete($_POST['file']);
+    $FileManager->delete($_POST['file']);
 ?>
